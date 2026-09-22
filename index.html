@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>프로그래밍 핵심 개념 5가지 실습</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1 class="text-center title-navy">프로그래밍 핵심 개념 5가지 실습</h1>
+    <p class="text-center">변수 · 조건문 · 반복문 · 함수 · 데이터 타입, 5가지 개념을 직접 눌러보면서 익혀봅니다.</p>
+
+    <hr>
+
+    <!-- =============================================== -->
+    <!-- 01. 변수 (Variable): 데이터 담기 -->
+    <!-- =============================================== -->
+    <section class="lesson-section">
+        <h2>01. 변수 (Variable): 데이터 담기</h2>
+        <p>데이터를 저장해두는 '상자'입니다. 사용자의 아이디, 장바구니에 담긴 상품의 총액, 현재 시간 등 프로그램이 실행되는 동안 <span class="highlight-blue">기억하고 조작해야 하는 정보</span>들을 담아둡니다.</p>
+
+        <pre><code>const userId = "haewa_2026";      // 문자열을 담는 변수
+const price = 4500;               // 숫자를 담는 변수
+const quantity = 2;
+const total = price * quantity;   // 변수끼리 계산해서 새 값 만들기</code></pre>
+
+        <div class="demo-box">
+            <label>아이디: <input type="text" id="var-userid" placeholder="예: haewa_2026"></label><br>
+            <label>상품 가격: <input type="number" id="var-price" placeholder="예: 4500"></label><br>
+            <label>수량: <input type="number" id="var-quantity" placeholder="예: 2"></label><br>
+            <button id="var-btn">변수에 저장하고 계산하기</button>
+            <p class="output" id="var-output">여기에 결과가 표시됩니다.</p>
+        </div>
+    </section>
+
+    <hr>
+
+    <!-- =============================================== -->
+    <!-- 02. 조건문 (if): 분기 -->
+    <!-- =============================================== -->
+    <section class="lesson-section">
+        <h2>02. 조건문 (if): 분기</h2>
+        <p>주어진 상황에 따라 프로그램의 흐름을 나누는 갈래길입니다. "비밀번호가 일치하면 로그인을 승인하고, 틀리면 에러 메시지를 띄운다"처럼 <span class="highlight-blue">논리적인 판단</span>을 내릴 때 사용합니다.</p>
+
+        <pre><code>if (inputPassword === correctPassword) {
+    // 조건이 참(true)일 때 실행
+    console.log("로그인 성공");
+} else {
+    // 조건이 거짓(false)일 때 실행
+    console.log("비밀번호가 틀렸습니다");
+}</code></pre>
+
+        <div class="demo-box">
+            <p class="text-gray">테스트용 정답 비밀번호는 <code class="code-crimson">1234</code> 입니다.</p>
+            <label>비밀번호: <input type="password" id="if-password" placeholder="1234를 입력해보세요"></label>
+            <button id="if-btn">로그인</button>
+            <p class="output" id="if-output">결과가 여기에 표시됩니다.</p>
+        </div>
+    </section>
+
+    <hr>
+
+    <!-- =============================================== -->
+    <!-- 03. 반복문 (loop): 반복 -->
+    <!-- =============================================== -->
+    <section class="lesson-section">
+        <h2>03. 반복문 (loop): 반복</h2>
+        <p>단순하고 반복적인 작업을 컴퓨터가 빠르게 처리하도록 지시합니다. <span class="highlight-blue">게시판의 글 목록을 화면에 순서대로 나열</span>할 때처럼 필수적으로 사용됩니다.</p>
+
+        <pre><code>for (let i = 1; i &lt;= count; i++) {
+    // count번 만큼 반복 실행되는 코드
+    console.log(i + "번째 게시글");
+}</code></pre>
+
+        <div class="demo-box">
+            <label>게시글 개수: <input type="number" id="loop-count" placeholder="예: 5"></label>
+            <button id="loop-btn">게시글 목록 만들기</button>
+            <ul id="loop-output" class="board-list"></ul>
+        </div>
+    </section>
+
+    <hr>
+
+    <!-- =============================================== -->
+    <!-- 04. 함수 (Function): 묶기 -->
+    <!-- =============================================== -->
+    <section class="lesson-section">
+        <h2>04. 함수 (Function): 묶기</h2>
+        <p>특정 목적을 위한 코드 여러 줄을 하나로 묶어 이름을 붙여둔 '명령어 세트'입니다. <span class="highlight-blue">'결제 처리' 함수</span>를 한 번 만들어두면, 필요할 때마다 코드를 다시 짤 필요 없이 그 블록만 불러와서 재사용할 수 있습니다.</p>
+
+        <pre><code>function processPayment(itemName, amount) {
+    // 이 블록 안의 로직을 한 번만 작성해두고 계속 재사용합니다.
+    return itemName + " 결제 완료: " + amount + "원";
+}
+
+processPayment("커피", 4500);   // 재사용 1
+processPayment("책", 15000);    // 재사용 2</code></pre>
+
+        <div class="demo-box">
+            <button id="func-coffee-btn">커피 4,500원 결제</button>
+            <button id="func-book-btn">책 15,000원 결제</button>
+            <br>
+            <label>직접 입력: <input type="text" id="func-item" placeholder="상품명"></label>
+            <label><input type="number" id="func-amount" placeholder="금액"></label>
+            <button id="func-custom-btn">결제하기</button>
+            <p class="output" id="func-output">결제 내역이 여기에 표시됩니다.</p>
+        </div>
+    </section>
+
+    <hr>
+
+    <!-- =============================================== -->
+    <!-- 05. 데이터 타입 (Type): 구분 -->
+    <!-- =============================================== -->
+    <section class="lesson-section">
+        <h2>05. 데이터 타입 (Type): 구분</h2>
+        <p>컴퓨터가 데이터를 정확하게 다룰 수 있도록 값의 종류를 분류하는 기준입니다. <code class="code-crimson">'123'</code>이 덧셈이 가능한 <span class="highlight-blue">숫자(Number)</span>인지, 화면에 보여줄 <span class="highlight-blue">텍스트(String)</span>인지, 맞다/틀리다를 나타내는 <span class="highlight-blue">불리언(Boolean)</span>인지를 구분합니다.</p>
+
+        <pre><code>typeof 123        // "number"
+typeof "123"      // "string"
+typeof true       // "boolean"
+
+123 + 1           // 124        (숫자 덧셈)
+"123" + 1         // "1231"     (문자열 이어붙이기)</code></pre>
+
+        <div class="demo-box">
+            <button id="type-number-btn">숫자 123 확인</button>
+            <button id="type-string-btn">문자열 "123" 확인</button>
+            <button id="type-boolean-btn">불리언 true 확인</button>
+            <br>
+            <button id="type-plus-number-btn">123 + 1 계산</button>
+            <button id="type-plus-string-btn">"123" + 1 계산</button>
+            <p class="output" id="type-output">결과가 여기에 표시됩니다.</p>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
