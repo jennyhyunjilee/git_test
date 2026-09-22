@@ -1,0 +1,121 @@
+/* style.css */
+/* Basic/style.css의 기본 톤을 그대로 이어받아 작성했습니다. */
+
+body {
+    background-color: #f9f9f9;
+    font-family: "맑은 고딕", sans-serif;
+    line-height: 1.6;
+}
+
+h1, h2 {
+    color: #2980b9;
+}
+
+hr {
+    width: 80%;
+    height: 3px;
+    background-color: silver;
+    border: none;
+    margin: 30px auto;
+}
+
+.text-center { text-align: center; }
+.title-navy { color: navy; }
+.highlight-blue {
+    color: blue;
+    text-decoration: underline;
+}
+.text-gray { color: gray; }
+.code-crimson { color: crimson; }
+
+/* 각 개념(01~05)을 담는 하나의 실습 블록 */
+.lesson-section {
+    max-width: 640px;
+    margin: 0 auto 20px auto;
+    padding: 0 20px;
+}
+
+/* 코드 예시를 보여주는 회색 박스 */
+pre {
+    background-color: #2d2d2d;
+    color: #f5f5f5;
+    padding: 14px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 14px;
+}
+
+pre code {
+    color: #f5f5f5;
+}
+
+/* 실제로 눌러보는 실습 영역 */
+.demo-box {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 16px;
+    margin-top: 10px;
+}
+
+.demo-box label {
+    display: inline-block;
+    margin: 6px 0;
+}
+
+.demo-box input {
+    padding: 5px 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    cursor: pointer;
+    padding: 6px 14px;
+    margin: 6px 4px 6px 0;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+}
+
+button:hover {
+    background-color: #eee;
+}
+
+/* 실습 결과를 보여주는 출력창 */
+.output {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f1f8ff;
+    border-left: 4px solid #2980b9;
+    border-radius: 4px;
+}
+
+.output.success {
+    background-color: #eafaf1;
+    border-left-color: #27ae60;
+    color: #1e7e45;
+}
+
+.output.error {
+    background-color: #fdecea;
+    border-left-color: #e74c3c;
+    color: #c0392b;
+}
+
+/* 03. 반복문으로 생성되는 게시글 목록 */
+.board-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.board-list li {
+    background-color: #f1f8ff;
+    border: 1px solid #dceafd;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+}
