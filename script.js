@@ -3,7 +3,9 @@
 // 각 레슨은 p5.js 인스턴스 모드로 독립된 캔버스를 그립니다.
 
 const PAPER = [255, 255, 255];
-const RED = '#e6332a';
+const ACCENT = window.sketchbookTheme.color;
+const ACCENT_RGB = window.sketchbookTheme.rgb;
+document.querySelector('#var-color').value = ACCENT;
 const BLUE = '#3b82c4';
 const INK = '#1d1d1f';
 
@@ -32,7 +34,7 @@ new p5(function (p) {
         const canvas = p.createCanvas(host.clientWidth, Math.max(300, Math.min(540, host.clientWidth * 0.8)));
         canvas.parent(host);
         canvas.elt.setAttribute('role', 'img');
-        canvas.elt.setAttribute('aria-label', 'Interactive red particle ring that moves away from your cursor');
+        canvas.elt.setAttribute('aria-label', 'Interactive particle ring that moves away from your cursor');
         canvas.elt.addEventListener('pointerenter', () => { pointerInside = true; });
         canvas.elt.addEventListener('pointerleave', () => { pointerInside = false; });
         p.pixelDensity(Math.min(window.devicePixelRatio || 1, 2));
@@ -48,7 +50,7 @@ new p5(function (p) {
     };
     p.draw = function () {
         p.background(255);
-        p.fill(RED);
+        p.fill(ACCENT);
         dots.forEach(function (d) {
             const dx = d.homeX - p.mouseX;
             const dy = d.homeY - p.mouseY;
@@ -62,10 +64,10 @@ new p5(function (p) {
         });
         if (pointerInside) {
             p.noFill();
-            p.stroke(230, 51, 42, 80);
+            p.stroke(...ACCENT_RGB, 80);
             p.circle(p.mouseX, p.mouseY, reducedMotion.matches ? 60 : 65 + Math.sin(p.frameCount * 0.07) * 14);
         }
-        p.stroke(RED);
+        p.stroke(ACCENT);
         p.strokeWeight(1);
         const cx = p.width / 2, cy = p.height / 2;
         p.line(cx - 9, cy, cx + 9, cy);
@@ -123,7 +125,7 @@ new p5(function (p) {
         if (mx < p.width / 2) {
             p.fill(BLUE);
         } else {
-            p.fill(RED);
+            p.fill('#e6332a');
         }
         p.ellipse(mx, my, 40, 40);
 
@@ -146,7 +148,7 @@ new p5(function (p) {
 
     p.draw = function () {
         p.background(...PAPER);
-        p.fill(RED);
+        p.fill(ACCENT);
 
         const count = Number(countInput.value);
         const cx = p.width / 2;
@@ -179,7 +181,7 @@ new p5(function (p) {
             const x = p.random(30, p.width - 30);
             const y = p.random(30, p.height - 30);
             const size = p.random(24, 64);
-            const col = p.random([RED, BLUE, INK]);
+            const col = p.random([ACCENT, BLUE, INK]);
             stamps.push(stamp(x, y, size, col));
         });
 
@@ -218,7 +220,7 @@ new p5(function (p) {
         if (isMoving) {
             x = (x + 2) % p.width;
         }
-        p.fill(RED);
+        p.fill(ACCENT);
         p.ellipse(x, p.height / 2, 30, 30);
 
         p.fill(140);
@@ -253,7 +255,7 @@ new p5(function (p) {
 
     p.draw = function () {
         p.background(...PAPER);
-        p.fill(RED);
+        p.fill(ACCENT);
         dots.forEach(function (d) {
             d.y = (d.y + d.vy) % p.height;
             p.ellipse(d.x, d.y, 8, 8);
@@ -282,7 +284,7 @@ new p5(function (p) {
         const x = p.noise(t) * p.width;
         const y = p.noise(t + 100) * p.height;
 
-        p.fill(RED);
+        p.fill(ACCENT);
         p.ellipse(x, y, 20, 20);
 
         t += speed;
@@ -309,7 +311,7 @@ new p5(function (p) {
             if (this.y < 0 || this.y > p.height) this.vy *= -1;
         }
         show() {
-            p.fill(RED);
+            p.fill(ACCENT);
             p.ellipse(this.x, this.y, 10, 10);
         }
     }
@@ -383,7 +385,7 @@ new p5(function (p) {
 
     p.draw = function () {
         p.background(...PAPER);
-        p.fill(RED);
+        p.fill(ACCENT);
         p.rectMode(p.CENTER);
         p.rect(x, y, 36, 36, 6);
 
@@ -566,7 +568,7 @@ levelTabs.forEach(tab => {
             p.background(255);
             const amount = Number(input.value);
             time += Math.min(p.deltaTime || 16, 50) * 0.001;
-            p.stroke(RED); p.strokeWeight(1.2); p.noFill();
+            p.stroke(ACCENT); p.strokeWeight(1.2); p.noFill();
             if (kind === 'flow') {
                 const spacing = 440 / amount;
                 for (let y = 20; y < p.height; y += spacing) {
@@ -582,7 +584,7 @@ levelTabs.forEach(tab => {
                 }
             } else if (kind === 'force') {
                 const target = p.createVector(active ? pointer.x : p.width / 2, active ? pointer.y : p.height / 2);
-                p.noStroke(); p.fill(RED);
+                p.noStroke(); p.fill(ACCENT);
                 particles.forEach(particle => {
                     const force = p5.Vector.sub(target, particle.position);
                     force.setMag(amount * 0.03);
@@ -594,7 +596,7 @@ levelTabs.forEach(tab => {
                 const amplitude = active ? p.map(pointer.y, 0, p.height, 8, 65) : 35;
                 const phase = active ? pointer.x / p.width * p.TWO_PI : 0;
                 for (let layer = 0; layer < 7; layer++) {
-                    p.stroke(230, 51, 42, 45 + layer * 30);
+                    p.stroke(...ACCENT_RGB, 45 + layer * 30);
                     p.beginShape();
                     for (let x = 0; x <= p.width; x += 3) {
                         const a = Math.sin(x * amount * 0.008 + time + layer * 0.15);
@@ -622,13 +624,13 @@ levelTabs.forEach(tab => {
                 for (let i = 1; i <= amount; i++) {
                     const radius = 20 + i * 12;
                     p.push(); p.translate(cx, cy); p.rotate(time * 0.3 + i * Math.PI / amount);
-                    p.noFill(); p.stroke(230, 51, 42, 130); p.ellipse(0, 0, radius * 2, radius);
+                    p.noFill(); p.stroke(...ACCENT_RGB, 130); p.ellipse(0, 0, radius * 2, radius);
                     p.translate(radius * Math.cos(time + i), radius * 0.5 * Math.sin(time + i));
-                    p.noStroke(); p.fill(RED); p.circle(0, 0, 7); p.pop();
+                    p.noStroke(); p.fill(ACCENT); p.circle(0, 0, 7); p.pop();
                 }
             }
             if (active) {
-                p.noFill(); p.stroke(230, 51, 42, 90); p.strokeWeight(1);
+                p.noFill(); p.stroke(...ACCENT_RGB, 90); p.strokeWeight(1);
                 p.circle(pointer.x, pointer.y, 26);
             }
         };
