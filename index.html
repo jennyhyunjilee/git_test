@@ -10,7 +10,37 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    <script src="theme.js"></script>
+    <!-- Keep theme initialization in this tracked page for static deployments. -->
+    <script>
+        // Apply before the stylesheet loads so the first paint uses the selected palette.
+        (function () {
+            const palettes = [
+                { name: 'red', color: '#e6332a', ink: '#c62b23', on: '#ffffff' },
+                { name: 'blue', color: '#2563eb', ink: '#245bd1', on: '#ffffff' },
+                { name: 'green', color: '#16834b', ink: '#137340', on: '#ffffff' },
+                { name: 'purple', color: '#7c3aed', ink: '#7130db', on: '#ffffff' },
+                { name: 'yellow', color: '#f2c500', ink: '#806600', on: '#171717' },
+                { name: 'pink', color: '#ec4899', ink: '#b8246c', on: '#171717' },
+                { name: 'pastel-sky', color: '#a8d8f0', ink: '#326981', on: '#171717' },
+                { name: 'black', color: '#171717', ink: '#171717', on: '#ffffff' },
+                { name: 'gray', color: '#777777', ink: '#626262', on: '#ffffff' }
+            ];
+            let previous;
+            try { previous = localStorage.getItem('code-sketchbook-theme'); } catch (_) { /* Storage is optional. */ }
+            const choices = palettes.filter(palette => palette.name !== previous);
+            const theme = choices[Math.floor(Math.random() * choices.length)];
+            const rgb = theme.color.slice(1).match(/../g).map(channel => parseInt(channel, 16));
+            const root = document.documentElement;
+            root.dataset.theme = theme.name;
+            root.style.setProperty('--accent', theme.color);
+            root.style.setProperty('--accent-ink', theme.ink);
+            root.style.setProperty('--accent-rgb', rgb.join(', '));
+            root.style.setProperty('--accent-tint', `rgba(${rgb.join(', ')}, 0.07)`);
+            root.style.setProperty('--on-accent', theme.on);
+            window.sketchbookTheme = Object.freeze({ ...theme, rgb });
+            try { localStorage.setItem('code-sketchbook-theme', theme.name); } catch (_) { /* Still random without storage. */ }
+        })();
+    </script>
     <link rel="stylesheet" href="style.css">
 </head>
 

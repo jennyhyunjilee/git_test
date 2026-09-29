@@ -3,8 +3,10 @@
 // 각 레슨은 p5.js 인스턴스 모드로 독립된 캔버스를 그립니다.
 
 const PAPER = [255, 255, 255];
-const ACCENT = window.sketchbookTheme.color;
-const ACCENT_RGB = window.sketchbookTheme.rgb;
+// A missing theme must never prevent the lesson previews from starting.
+const activeTheme = window.sketchbookTheme || { color: '#e6332a', rgb: [230, 51, 42] };
+const ACCENT = activeTheme.color;
+const ACCENT_RGB = activeTheme.rgb;
 document.querySelector('#var-color').value = ACCENT;
 const BLUE = '#3b82c4';
 const INK = '#1d1d1f';
