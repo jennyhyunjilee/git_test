@@ -2,139 +2,696 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>프로그래밍 핵심 개념 5가지 실습</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Sketchbook — 미디어 아티스트를 위한 코드 학습</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h1 class="text-center title-navy">프로그래밍 핵심 개념 5가지 실습</h1>
-    <p class="text-center">변수 · 조건문 · 반복문 · 함수 · 데이터 타입, 5가지 개념을 직접 눌러보면서 익혀봅니다.</p>
-
-    <hr>
+    <!-- 상단 고정 네비게이션 -->
+    <nav class="topbar">
+        <a href="#top" class="brand"><span class="brand-mark" aria-hidden="true">✳</span> Code Sketchbook<span class="brand-edition"> / 001</span></a>
+        <div class="topbar-links">
+            <a href="#lesson-01">Variables</a>
+            <a href="#lesson-02">Conditionals</a>
+            <a href="#lesson-03">Loops</a>
+            <a href="#lesson-04">Functions</a>
+            <a href="#lesson-05">Types</a>
+        </div>
+    </nav>
 
     <!-- =============================================== -->
-    <!-- 01. 변수 (Variable): 데이터 담기 -->
+    <!-- 히어로 -->
     <!-- =============================================== -->
-    <section class="lesson-section">
-        <h2>01. 변수 (Variable): 데이터 담기</h2>
-        <p>데이터를 저장해두는 '상자'입니다. 사용자의 아이디, 장바구니에 담긴 상품의 총액, 현재 시간 등 프로그램이 실행되는 동안 <span class="highlight-blue">기억하고 조작해야 하는 정보</span>들을 담아둡니다.</p>
+    <header class="hero" id="top">
+        <div class="hero-text">
+            <span class="eyebrow">CODE FOR MEDIA ARTISTS · BUILT WITH P5.JS</span>
+            <h1 class="title-navy">
+                <span class="light-line">Make ideas.</span>
+                <span class="bold-line">Move in code.</span>
+            </h1>
+            <p class="hero-desc">미디어 아티스트를 위한 코드 학습 노트. 설명을 읽는 대신, 슬라이더를 움직이고 캔버스를 클릭하며 직접 코드의 결과를 눈으로 확인합니다.</p>
+            <a href="#lesson-01" class="hero-cta">Start exploring <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="hero-visual">
+            <div class="visual-label"><span>01 / INTERACTIVE FIELD</span><span class="live-label">LIVE</span></div>
+            <div class="canvas-wrap" id="canvas-hero"></div>
+            <p class="hero-hint">MOVE YOUR CURSOR · WATCH IT REACT</p>
+        </div>
+    </header>
 
-        <pre><code>const userId = "haewa_2026";      // 문자열을 담는 변수
-const price = 4500;               // 숫자를 담는 변수
-const quantity = 2;
-const total = price * quantity;   // 변수끼리 계산해서 새 값 만들기</code></pre>
+    <!-- 난이도 탭 -->
+    <div class="level-tabs">
+        <button type="button" class="level-tab is-active" data-track="beginner">Beginner <span class="level-tag">01—05</span></button>
+        <button type="button" class="level-tab" data-track="intermediate">Intermediate <span class="level-tag">06—10</span></button>
+        <button type="button" class="level-tab" data-track="advanced">Advanced <span class="level-tag">11—15</span></button>
+    </div>
 
-        <div class="demo-box">
-            <label>아이디: <input type="text" id="var-userid" placeholder="예: haewa_2026"></label><br>
-            <label>상품 가격: <input type="number" id="var-price" placeholder="예: 4500"></label><br>
-            <label>수량: <input type="number" id="var-quantity" placeholder="예: 2"></label><br>
-            <button id="var-btn">변수에 저장하고 계산하기</button>
-            <p class="output" id="var-output">여기에 결과가 표시됩니다.</p>
+    <!-- =============================================== -->
+    <!-- 초급 트랙 -->
+    <!-- =============================================== -->
+    <div class="track" id="track-beginner">
+
+    <!-- 01. 변수 (Variable) -->
+    <section class="lesson-section band-a reveal" id="lesson-01">
+        <div class="section-inner">
+            <div class="lesson-grid">
+                <div class="lesson-text">
+                    <span class="page-num">01</span>
+                    <div class="icon-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3 L21 7.5 L21 16.5 L12 21 L3 16.5 L3 7.5 Z"/>
+                            <path d="M12 3 L12 21"/>
+                            <path d="M3 7.5 L12 12 L21 7.5"/>
+                        </svg>
+                    </div>
+                    <span class="kicker">PAGE 01 · VARIABLE</span>
+                    <h2>Variables</h2>
+                    <p class="tagline">변수 — 도형의 위치와 크기를 담는 그릇.</p>
+                    <p class="section-body">화면 위 원의 위치(x, y)와 크기, 색상은 모두 <span class="highlight-blue">변수에 담겨</span> 있습니다. 슬라이더를 움직이면 변수 값이 바뀌고, 그 값을 참조하는 원도 함께 바뀝니다.</p>
+
+                    <div class="code-window">
+                        <div class="code-dots"><span></span><span></span><span></span></div>
+                        <pre><code>let x = 150;
+let y = 150;
+let size = 80;
+
+fill(color);
+ellipse(x, y, size, size);</code></pre>
+                    </div>
+
+                    <div class="quiz">
+                        <p class="quiz-q">Q. size 값을 80에서 160으로 바꾸면 원은 어떻게 될까요?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-option" data-correct="true">커진다</button>
+                            <button class="quiz-option">작아진다</button>
+                            <button class="quiz-option">사라진다</button>
+                            <button class="quiz-option">위치가 이동한다</button>
+                        </div>
+                        <p class="quiz-feedback"></p>
+                    </div>
+                </div>
+
+                <div class="lesson-demo">
+                    <div class="demo-box">
+                        <div class="canvas-wrap" id="canvas-var"></div>
+                        <div class="controls">
+                            <label>X <input type="range" id="var-x" min="20" max="280" value="150"></label>
+                            <label>Y <input type="range" id="var-y" min="20" max="280" value="150"></label>
+                            <label>크기 <input type="range" id="var-size" min="10" max="150" value="80"></label>
+                            <label>색상 <input type="color" id="var-color" value="#e6332a"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <hr>
+    <!-- 02. 조건문 (if) -->
+    <section class="lesson-section band-b reveal" id="lesson-02">
+        <div class="section-inner">
+            <div class="lesson-grid reverse">
+                <div class="lesson-demo">
+                    <div class="demo-box">
+                        <div class="canvas-wrap" id="canvas-if"></div>
+                    </div>
+                </div>
 
-    <!-- =============================================== -->
-    <!-- 02. 조건문 (if): 분기 -->
-    <!-- =============================================== -->
-    <section class="lesson-section">
-        <h2>02. 조건문 (if): 분기</h2>
-        <p>주어진 상황에 따라 프로그램의 흐름을 나누는 갈래길입니다. "비밀번호가 일치하면 로그인을 승인하고, 틀리면 에러 메시지를 띄운다"처럼 <span class="highlight-blue">논리적인 판단</span>을 내릴 때 사용합니다.</p>
+                <div class="lesson-text">
+                    <span class="page-num">02</span>
+                    <div class="icon-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2 L22 12 L12 22 L2 12 Z"/>
+                            <path d="M9 12 L15 12"/>
+                        </svg>
+                    </div>
+                    <span class="kicker">PAGE 02 · IF</span>
+                    <h2>Conditionals</h2>
+                    <p class="tagline">조건문 — 위치에 따라 다르게 반응하기.</p>
+                    <p class="section-body">마우스가 캔버스의 왼쪽에 있는지 오른쪽에 있는지에 따라 원의 색이 달라집니다. <span class="highlight-blue">같은 코드라도 조건에 따라 전혀 다른 결과</span>를 만들 수 있습니다.</p>
 
-        <pre><code>if (inputPassword === correctPassword) {
-    // 조건이 참(true)일 때 실행
-    console.log("로그인 성공");
+                    <div class="code-window">
+                        <div class="code-dots"><span></span><span></span><span></span></div>
+                        <pre><code>if (mouseX < width / 2) {
+    fill('#3b82c4');
 } else {
-    // 조건이 거짓(false)일 때 실행
-    console.log("비밀번호가 틀렸습니다");
-}</code></pre>
+    fill('#e6332a');
+}
+ellipse(mouseX, mouseY, 40, 40);</code></pre>
+                    </div>
 
-        <div class="demo-box">
-            <p class="text-gray">테스트용 정답 비밀번호는 <code class="code-crimson">1234</code> 입니다.</p>
-            <label>비밀번호: <input type="password" id="if-password" placeholder="1234를 입력해보세요"></label>
-            <button id="if-btn">로그인</button>
-            <p class="output" id="if-output">결과가 여기에 표시됩니다.</p>
+                    <div class="quiz">
+                        <p class="quiz-q">Q. 캔버스의 정확히 왼쪽 끝(mouseX = 0)에서는 어떤 색 원이 그려질까요?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-option" data-correct="true">파란색</button>
+                            <button class="quiz-option">빨간색</button>
+                            <button class="quiz-option">검정색</button>
+                            <button class="quiz-option">그려지지 않는다</button>
+                        </div>
+                        <p class="quiz-feedback"></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <hr>
+    <!-- 03. 반복문 (loop) -->
+    <section class="lesson-section band-a reveal" id="lesson-03">
+        <div class="section-inner">
+            <div class="lesson-grid">
+                <div class="lesson-text">
+                    <span class="page-num">03</span>
+                    <div class="icon-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 12a9 9 0 0 1 15-6.7L21 8"/>
+                            <path d="M21 3v5h-5"/>
+                            <path d="M21 12a9 9 0 0 1-15 6.7L3 16"/>
+                            <path d="M3 21v-5h5"/>
+                        </svg>
+                    </div>
+                    <span class="kicker">PAGE 03 · LOOP</span>
+                    <h2>Loops</h2>
+                    <p class="tagline">반복문 — 같은 모양을 지치지 않고 반복.</p>
+                    <p class="section-body">원 하나를 그리는 코드를 count번 반복해서, <span class="highlight-blue">방사형으로 퍼지는 점 패턴</span>을 만듭니다. 개수를 늘릴수록 패턴은 더 촘촘하고 복잡해집니다.</p>
 
-    <!-- =============================================== -->
-    <!-- 03. 반복문 (loop): 반복 -->
-    <!-- =============================================== -->
-    <section class="lesson-section">
-        <h2>03. 반복문 (loop): 반복</h2>
-        <p>단순하고 반복적인 작업을 컴퓨터가 빠르게 처리하도록 지시합니다. <span class="highlight-blue">게시판의 글 목록을 화면에 순서대로 나열</span>할 때처럼 필수적으로 사용됩니다.</p>
-
-        <pre><code>for (let i = 1; i &lt;= count; i++) {
-    // count번 만큼 반복 실행되는 코드
-    console.log(i + "번째 게시글");
+                    <div class="code-window">
+                        <div class="code-dots"><span></span><span></span><span></span></div>
+                        <pre><code>for (let i = 0; i < count; i++) {
+    let angle = (TWO_PI / count) * i;
+    let x = cx + cos(angle) * 100;
+    let y = cy + sin(angle) * 100;
+    ellipse(x, y, 14, 14);
 }</code></pre>
+                    </div>
 
-        <div class="demo-box">
-            <label>게시글 개수: <input type="number" id="loop-count" placeholder="예: 5"></label>
-            <button id="loop-btn">게시글 목록 만들기</button>
-            <ul id="loop-output" class="board-list"></ul>
+                    <div class="quiz">
+                        <p class="quiz-q">Q. count를 10에서 40으로 늘리면 어떤 변화가 생길까요?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-option" data-correct="true">점이 더 촘촘하게 배치된다</button>
+                            <button class="quiz-option">점 하나의 크기가 커진다</button>
+                            <button class="quiz-option">점의 색이 바뀐다</button>
+                            <button class="quiz-option">반복문이 멈춘다</button>
+                        </div>
+                        <p class="quiz-feedback"></p>
+                    </div>
+                </div>
+
+                <div class="lesson-demo">
+                    <div class="demo-box">
+                        <div class="canvas-wrap" id="canvas-loop"></div>
+                        <div class="controls">
+                            <label>개수 <input type="range" id="loop-count" min="3" max="40" value="10"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <hr>
+    <!-- 04. 함수 (Function) -->
+    <section class="lesson-section band-b reveal" id="lesson-04">
+        <div class="section-inner">
+            <div class="lesson-grid reverse">
+                <div class="lesson-demo">
+                    <div class="demo-box">
+                        <div class="canvas-wrap" id="canvas-func"></div>
+                        <div class="controls">
+                            <button type="button" id="func-stamp-btn">도장 찍기 (함수 호출)</button>
+                            <button type="button" id="func-clear-btn">지우기</button>
+                        </div>
+                    </div>
+                </div>
 
-    <!-- =============================================== -->
-    <!-- 04. 함수 (Function): 묶기 -->
-    <!-- =============================================== -->
-    <section class="lesson-section">
-        <h2>04. 함수 (Function): 묶기</h2>
-        <p>특정 목적을 위한 코드 여러 줄을 하나로 묶어 이름을 붙여둔 '명령어 세트'입니다. <span class="highlight-blue">'결제 처리' 함수</span>를 한 번 만들어두면, 필요할 때마다 코드를 다시 짤 필요 없이 그 블록만 불러와서 재사용할 수 있습니다.</p>
+                <div class="lesson-text">
+                    <span class="page-num">04</span>
+                    <div class="icon-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M8 4 L3 12 L8 20"/>
+                            <path d="M16 4 L21 12 L16 20"/>
+                        </svg>
+                    </div>
+                    <span class="kicker">PAGE 04 · FUNCTION</span>
+                    <h2>Functions</h2>
+                    <p class="tagline">함수 — 한 번 만들고, 계속 찍어내기.</p>
+                    <p class="section-body">'도장 찍기' 버튼을 누를 때마다 같은 <code class="code-crimson">stamp()</code> 함수가 다른 위치·크기·색으로 호출됩니다. <span class="highlight-blue">함수를 만들어두면 같은 로직을 계속 재사용</span>할 수 있습니다.</p>
 
-        <pre><code>function processPayment(itemName, amount) {
-    // 이 블록 안의 로직을 한 번만 작성해두고 계속 재사용합니다.
-    return itemName + " 결제 완료: " + amount + "원";
+                    <div class="code-window">
+                        <div class="code-dots"><span></span><span></span><span></span></div>
+                        <pre><code>function stamp(x, y, size, col) {
+    fill(col);
+    ellipse(x, y, size, size);
 }
 
-processPayment("커피", 4500);   // 재사용 1
-processPayment("책", 15000);    // 재사용 2</code></pre>
+stamp(80, 80, 40, red);    // 재사용 1
+stamp(200, 150, 60, blue); // 재사용 2</code></pre>
+                    </div>
 
-        <div class="demo-box">
-            <button id="func-coffee-btn">커피 4,500원 결제</button>
-            <button id="func-book-btn">책 15,000원 결제</button>
-            <br>
-            <label>직접 입력: <input type="text" id="func-item" placeholder="상품명"></label>
-            <label><input type="number" id="func-amount" placeholder="금액"></label>
-            <button id="func-custom-btn">결제하기</button>
-            <p class="output" id="func-output">결제 내역이 여기에 표시됩니다.</p>
+                    <div class="quiz">
+                        <p class="quiz-q">Q. 함수를 만들어서 재사용하면 가장 좋은 점은 무엇일까요?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-option" data-correct="true">같은 코드를 여러 번 다시 쓰지 않아도 된다</button>
+                            <button class="quiz-option">코드 실행 속도가 항상 빨라진다</button>
+                            <button class="quiz-option">변수를 전혀 쓰지 않아도 된다</button>
+                            <button class="quiz-option">화면 크기가 자동으로 커진다</button>
+                        </div>
+                        <p class="quiz-feedback"></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <hr>
+    <!-- 05. 데이터 타입 (Type) -->
+    <section class="lesson-section band-a reveal" id="lesson-05">
+        <div class="section-inner">
+            <div class="lesson-grid">
+                <div class="lesson-text">
+                    <span class="page-num">05</span>
+                    <div class="icon-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 11 L11 3 L20 3 L20 12 L12 20 Z"/>
+                            <circle cx="15.5" cy="7.5" r="1.5"/>
+                        </svg>
+                    </div>
+                    <span class="kicker">PAGE 05 · TYPE</span>
+                    <h2>Data Types</h2>
+                    <p class="tagline">데이터 타입 — 같은 값도 다른 역할.</p>
+                    <p class="section-body"><code class="code-crimson">isMoving</code>은 true 또는 false 값만 가지는 <span class="highlight-blue">Boolean 타입</span> 변수입니다. 이 값에 따라 원이 움직일지, 멈춰있을지가 결정됩니다.</p>
 
-    <!-- =============================================== -->
-    <!-- 05. 데이터 타입 (Type): 구분 -->
-    <!-- =============================================== -->
-    <section class="lesson-section">
-        <h2>05. 데이터 타입 (Type): 구분</h2>
-        <p>컴퓨터가 데이터를 정확하게 다룰 수 있도록 값의 종류를 분류하는 기준입니다. <code class="code-crimson">'123'</code>이 덧셈이 가능한 <span class="highlight-blue">숫자(Number)</span>인지, 화면에 보여줄 <span class="highlight-blue">텍스트(String)</span>인지, 맞다/틀리다를 나타내는 <span class="highlight-blue">불리언(Boolean)</span>인지를 구분합니다.</p>
+                    <div class="code-window">
+                        <div class="code-dots"><span></span><span></span><span></span></div>
+                        <pre><code>let isMoving = true;   // Boolean 타입
 
-        <pre><code>typeof 123        // "number"
-typeof "123"      // "string"
-typeof true       // "boolean"
+if (isMoving) {
+    x = (x + 2) % width;
+}
+ellipse(x, height / 2, 30, 30);</code></pre>
+                    </div>
 
-123 + 1           // 124        (숫자 덧셈)
-"123" + 1         // "1231"     (문자열 이어붙이기)</code></pre>
+                    <div class="quiz">
+                        <p class="quiz-q">Q. isMoving 변수의 데이터 타입은 무엇일까요?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-option" data-correct="true">Boolean</button>
+                            <button class="quiz-option">Number</button>
+                            <button class="quiz-option">String</button>
+                            <button class="quiz-option">Array</button>
+                        </div>
+                        <p class="quiz-feedback"></p>
+                    </div>
+                </div>
 
-        <div class="demo-box">
-            <button id="type-number-btn">숫자 123 확인</button>
-            <button id="type-string-btn">문자열 "123" 확인</button>
-            <button id="type-boolean-btn">불리언 true 확인</button>
-            <br>
-            <button id="type-plus-number-btn">123 + 1 계산</button>
-            <button id="type-plus-string-btn">"123" + 1 계산</button>
-            <p class="output" id="type-output">결과가 여기에 표시됩니다.</p>
+                <div class="lesson-demo">
+                    <div class="demo-box">
+                        <div class="canvas-wrap" id="canvas-type"></div>
+                        <div class="controls">
+                            <button type="button" id="type-toggle-btn">재생 / 정지 (Boolean)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
+    </div><!-- /track-beginner -->
+
+    <!-- =============================================== -->
+    <!-- 중급 트랙 -->
+    <!-- =============================================== -->
+    <div class="track" id="track-intermediate" hidden>
+
+    <!-- 06. 배열 (Array) -->
+    <section class="lesson-section band-a reveal" id="lesson-06">
+        <div class="section-inner">
+            <div class="lesson-grid">
+                <div class="lesson-text">
+                    <span class="page-num">01</span>
+                    <div class="icon-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M8 3 H4 V21 H8"/>
+                            <path d="M16 3 H20 V21 H16"/>
+                        </svg>
+                    </div>
+                    <span class="kicker">STAGE 01 · ARRAY</span>
+                    <h2>Arrays</h2>
+                    <p class="tagline">배열 — 여러 개의 값을 한 번에 다루기.</p>
+                    <p class="section-body">화면 위 여러 개의 원이 각자 다른 속도로 떠다닙니다. 각 원의 상태는 <span class="highlight-blue">배열 하나</span>에 담겨 있고, 반복문으로 배열 전체를 순회하며 한 번에 업데이트합니다.</p>
+
+                    <div class="code-window">
+                        <div class="code-dots"><span></span><span></span><span></span></div>
+                        <pre><code>let dots = [];
+
+for (let i = 0; i < count; i++) {
+    dots.push({ x: random(width), y: random(height), vy: random(1, 3) });
+}
+
+dots.forEach(d => {
+    d.y = (d.y + d.vy) % height;
+    ellipse(d.x, d.y, 8, 8);
+});</code></pre>
+                    </div>
+
+                    <div class="quiz">
+                        <p class="quiz-q">Q. dots 배열의 길이를 30에서 100으로 늘리면 어떻게 될까요?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-option" data-correct="true">원의 개수가 늘어난다</button>
+                            <button class="quiz-option">원의 속도가 빨라진다</button>
+                            <button class="quiz-option">배열이 사라진다</button>
+                            <button class="quiz-option">에러가 발생한다</button>
+                        </div>
+                        <p class="quiz-feedback"></p>
+                    </div>
+                </div>
+
+                <div class="lesson-demo">
+                    <div class="demo-box">
+                        <div class="canvas-wrap" id="canvas-array"></div>
+                        <div class="controls">
+                            <label>개수 <input type="range" id="array-count" min="5" max="100" value="30"></label>
+                            <button type="button" id="array-btn">다시 뿌리기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 07. 노이즈 (Perlin Noise) -->
+    <section class="lesson-section band-b reveal" id="lesson-07">
+        <div class="section-inner">
+            <div class="lesson-grid reverse">
+                <div class="lesson-demo">
+                    <div class="demo-box">
+                        <div class="canvas-wrap" id="canvas-noise"></div>
+                        <div class="controls">
+                            <label>속도 <input type="range" id="noise-speed" min="1" max="50" value="10"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lesson-text">
+                    <span class="page-num">02</span>
+                    <div class="icon-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 14 Q6 6 10 14 T18 14 T22 14"/>
+                        </svg>
+                    </div>
+                    <span class="kicker">STAGE 02 · NOISE</span>
+                    <h2>Perlin Noise</h2>
+                    <p class="tagline">노이즈 — 무작위지만 자연스러운 움직임.</p>
+                    <p class="section-body"><code class="code-crimson">random()</code>은 값이 매 순간 뚝뚝 끊기지만, <code class="code-crimson">noise()</code>는 <span class="highlight-blue">부드럽게 이어지는 값</span>을 만들어 유기적인 움직임을 표현합니다. 미디어 아트에서 자연스러운 흔들림을 만들 때 자주 쓰입니다.</p>
+
+                    <div class="code-window">
+                        <div class="code-dots"><span></span><span></span><span></span></div>
+                        <pre><code>let t = 0;
+
+function draw() {
+    let x = noise(t) * width;
+    let y = noise(t + 100) * height;
+    ellipse(x, y, 24, 24);
+    t += speed;
+}</code></pre>
+                    </div>
+
+                    <div class="quiz">
+                        <p class="quiz-q">Q. noise()와 random()의 가장 큰 차이는 무엇일까요?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-option" data-correct="true">noise는 값이 부드럽게 이어진다</button>
+                            <button class="quiz-option">noise는 항상 정수를 반환한다</button>
+                            <button class="quiz-option">random은 항상 같은 값을 반환한다</button>
+                            <button class="quiz-option">noise는 색상만 만들 수 있다</button>
+                        </div>
+                        <p class="quiz-feedback"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 08. 객체와 클래스 (Object/Class) -->
+    <section class="lesson-section band-a reveal" id="lesson-08">
+        <div class="section-inner">
+            <div class="lesson-grid">
+                <div class="lesson-text">
+                    <span class="page-num">03</span>
+                    <div class="icon-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 3c-3 0-3 2-3 5s0 4-3 4c3 0 3 1 3 4s0 5 3 5"/>
+                            <path d="M15 3c3 0 3 2 3 5s0 4 3 4c-3 0-3 1-3 4s0 5-3 5"/>
+                        </svg>
+                    </div>
+                    <span class="kicker">STAGE 03 · OBJECT</span>
+                    <h2>Objects &amp; Classes</h2>
+                    <p class="tagline">객체 — 데이터와 동작을 하나로 묶기.</p>
+                    <p class="section-body"><code class="code-crimson">Particle</code> 클래스 하나를 만들어두면, 클릭할 때마다 <span class="highlight-blue">위치·속도를 각자 가진 독립적인 입자</span>를 계속 만들어낼 수 있습니다. 캔버스를 클릭해 입자를 흩뿌려보세요.</p>
+
+                    <div class="code-window">
+                        <div class="code-dots"><span></span><span></span><span></span></div>
+                        <pre><code>class Particle {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.vx = random(-2, 2);
+        this.vy = random(-2, 2);
+    }
+    update() {
+        this.x += this.vx;
+        this.y += this.vy;
+    }
+}</code></pre>
+                    </div>
+
+                    <div class="quiz">
+                        <p class="quiz-q">Q. Particle 클래스로 입자를 여러 개 만들면 각 입자는 어떻게 될까요?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-option" data-correct="true">서로 다른 위치·속도를 독립적으로 가진다</button>
+                            <button class="quiz-option">모두 똑같이 움직인다</button>
+                            <button class="quiz-option">하나만 화면에 남는다</button>
+                            <button class="quiz-option">클래스는 한 번만 사용할 수 있다</button>
+                        </div>
+                        <p class="quiz-feedback"></p>
+                    </div>
+                </div>
+
+                <div class="lesson-demo">
+                    <div class="demo-box">
+                        <div class="canvas-wrap" id="canvas-object"></div>
+                        <div class="controls">
+                            <button type="button" id="object-clear-btn">지우기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 09. 이벤트 (Events) -->
+    <section class="lesson-section band-b reveal" id="lesson-09">
+        <div class="section-inner">
+            <div class="lesson-grid reverse">
+                <div class="lesson-demo">
+                    <div class="demo-box">
+                        <div class="canvas-wrap" id="canvas-event"></div>
+                        <div class="controls dpad">
+                            <button type="button" id="event-up" aria-label="위로">↑</button>
+                            <div class="dpad-row">
+                                <button type="button" id="event-left" aria-label="왼쪽으로">←</button>
+                                <button type="button" id="event-down" aria-label="아래로">↓</button>
+                                <button type="button" id="event-right" aria-label="오른쪽으로">→</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lesson-text">
+                    <span class="page-num">04</span>
+                    <div class="icon-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="7" width="18" height="10" rx="2"/>
+                            <path d="M7 11h.01M11 11h.01M15 11h.01M9 15h6"/>
+                        </svg>
+                    </div>
+                    <span class="kicker">STAGE 04 · EVENT</span>
+                    <h2>Events</h2>
+                    <p class="tagline">이벤트 — 사용자의 입력에 반응하기.</p>
+                    <p class="section-body">방향키(또는 버튼)를 누르면 사각형이 이동합니다. <code class="code-crimson">keyPressed()</code> 같은 이벤트 함수는 <span class="highlight-blue">사용자의 행동에 실시간으로 반응</span>하는 인터랙티브 작업의 기본입니다.</p>
+
+                    <div class="code-window">
+                        <div class="code-dots"><span></span><span></span><span></span></div>
+                        <pre><code>function keyPressed() {
+    if (keyCode === LEFT_ARROW)  x -= 10;
+    if (keyCode === RIGHT_ARROW) x += 10;
+    if (keyCode === UP_ARROW)    y -= 10;
+    if (keyCode === DOWN_ARROW)  y += 10;
+}</code></pre>
+                    </div>
+
+                    <div class="quiz">
+                        <p class="quiz-q">Q. keyPressed() 함수는 언제 실행될까요?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-option" data-correct="true">키보드를 누르는 순간</button>
+                            <button class="quiz-option">마우스를 클릭하는 순간</button>
+                            <button class="quiz-option">페이지가 로드되는 순간</button>
+                            <button class="quiz-option">1초마다 자동으로</button>
+                        </div>
+                        <p class="quiz-feedback"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. 색상 모드 (Color Modes) -->
+    <section class="lesson-section band-a reveal" id="lesson-10">
+        <div class="section-inner">
+            <div class="lesson-grid">
+                <div class="lesson-text">
+                    <span class="page-num">05</span>
+                    <div class="icon-chip">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 2-2s-.5-1.5-.5-2.5c0-1 .8-1.5 2-1.5h2c2 0 3-1.5 3-4a9 9 0 0 0-8.5-8Z"/>
+                            <circle cx="7.5" cy="10.5" r="1.1"/>
+                            <circle cx="10.5" cy="7" r="1.1"/>
+                            <circle cx="15" cy="7.5" r="1.1"/>
+                        </svg>
+                    </div>
+                    <span class="kicker">STAGE 05 · COLOR</span>
+                    <h2>Color Modes</h2>
+                    <p class="tagline">색상 모드 — 무지개처럼 색을 순환시키기.</p>
+                    <p class="section-body"><code class="code-crimson">colorMode(HSB)</code>를 사용하면 <span class="highlight-blue">색상(Hue)만 계속 바꿔가며</span> 자연스럽게 순환하는 무지개색을 만들 수 있습니다. RGB보다 색을 직관적으로 다룰 수 있어 제너레이티브 아트에서 즐겨 사용됩니다.</p>
+
+                    <div class="code-window">
+                        <div class="code-dots"><span></span><span></span><span></span></div>
+                        <pre><code>colorMode(HSB, 360, 100, 100);
+let hue = 0;
+
+function draw() {
+    fill(hue, 80, 90);
+    ellipse(x, y, 40, 40);
+    hue = (hue + speed) % 360;
+}</code></pre>
+                    </div>
+
+                    <div class="quiz">
+                        <p class="quiz-q">Q. hue 값이 360이 되면 다시 0부터 시작하는 이유는 무엇일까요?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-option" data-correct="true">% 360 연산으로 값을 순환시키기 때문에</button>
+                            <button class="quiz-option">색상은 360가지만 존재하기 때문에</button>
+                            <button class="quiz-option">에러를 방지하려고 항상 0으로 초기화하기 때문에</button>
+                            <button class="quiz-option">HSB는 최댓값이 없기 때문에</button>
+                        </div>
+                        <p class="quiz-feedback"></p>
+                    </div>
+                </div>
+
+                <div class="lesson-demo">
+                    <div class="demo-box">
+                        <div class="canvas-wrap" id="canvas-color"></div>
+                        <div class="controls">
+                            <label>회전 속도 <input type="range" id="color-speed" min="1" max="20" value="4"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </div><!-- /track-intermediate -->
+
+<div class="track" id="track-advanced" hidden>
+<section class="lesson-section reveal" id="lesson-11">
+ <div class="section-inner"><div class="lesson-grid">
+ <div class="lesson-text"><span class="page-num">11</span><div class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6c7-8 11 8 18 0M3 12c7-8 11 8 18 0M3 18c7-8 11 8 18 0"/></svg></div>
+ <span class="kicker">ADVANCED / 11 · CREATIVE SYSTEMS</span><h2>Flow Fields</h2>
+ <p class="tagline">흐름장 — 보이지 않는 방향을 그리기.</p><p class="section-body">noise()로 위치마다 다른 각도를 만들고, 마우스 주변에서는 그 각도를 커서 방향으로 섞습니다. 마우스를 올려 흐름이 휘어지는 모습을 확인하세요.</p>
+ <div class="code-window"><div class="code-dots"><span></span><span></span><span></span></div><pre><code>let angle = noise(x * scale, y * scale) * TWO_PI;
+let target = atan2(mouseY - y, mouseX - x);
+angle += atan2(sin(target - angle),
+               cos(target - angle)) * influence;
+line(x, y, x + cos(angle) * 16,
+           y + sin(angle) * 16);</code></pre></div>
+ <div class="quiz"><p class="quiz-q">Q. 노이즈를 방향으로 사용하면 어떤 효과가 생길까요?</p><div class="quiz-options"><button type="button" class="quiz-option" data-correct="true">주변과 부드럽게 이어지는 흐름</button><button type="button" class="quiz-option">모든 선이 같은 방향으로 고정</button><button type="button" class="quiz-option">모든 입자가 사라짐</button><button type="button" class="quiz-option">색상 모드가 자동 변경</button></div><p class="quiz-feedback" aria-live="polite"></p></div></div>
+ <div class="lesson-demo"><div class="demo-box"><div class="canvas-wrap advanced-canvas" id="canvas-flow"></div>
+ <p class="interaction-hint">HOVER TO INTERACT <span>마우스를 올리거나 터치해서 움직여보세요</span></p>
+ <div class="controls"><label>밀도<input type="range" id="flow-amount" min="8" max="24" value="16"></label><button type="button" id="flow-reset">Reset ↺</button></div></div></div>
+ </div></div></section>
+<section class="lesson-section reveal" id="lesson-12">
+ <div class="section-inner"><div class="lesson-grid">
+ <div class="lesson-text"><span class="page-num">12</span><div class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M3 3l5 5M21 3l-5 5M3 21l5-5M21 21l-5-5"/></svg></div>
+ <span class="kicker">ADVANCED / 12 · CREATIVE SYSTEMS</span><h2>Attraction & Forces</h2>
+ <p class="tagline">힘과 벡터 — 커서에 끌리는 입자.</p><p class="section-body">가속도를 속도에 더하고, 속도를 위치에 더하면 힘에 반응하는 움직임이 만들어집니다. 마우스를 올리면 입자가 모이고, 벗어나면 중심 주위를 흐릅니다.</p>
+ <div class="code-window"><div class="code-dots"><span></span><span></span><span></span></div><pre><code>let force = p5.Vector.sub(target, position);
+force.setMag(strength);
+velocity.add(force);
+velocity.mult(0.96); // 감쇠
+position.add(velocity);</code></pre></div>
+ <div class="quiz"><p class="quiz-q">Q. velocity.mult(0.96)의 역할은 무엇일까요?</p><div class="quiz-options"><button type="button" class="quiz-option" data-correct="true">속도를 조금 줄여 움직임을 감쇠</button><button type="button" class="quiz-option">입자를 96개 생성</button><button type="button" class="quiz-option">속도를 계속 증가</button><button type="button" class="quiz-option">위치를 초기화</button></div><p class="quiz-feedback" aria-live="polite"></p></div></div>
+ <div class="lesson-demo"><div class="demo-box"><div class="canvas-wrap advanced-canvas" id="canvas-force"></div>
+ <p class="interaction-hint">HOVER TO INTERACT <span>마우스를 올리거나 터치해서 움직여보세요</span></p>
+ <div class="controls"><label>끌어당기는 힘<input type="range" id="force-amount" min="1" max="15" value="5"></label><button type="button" id="force-reset">Reset ↺</button></div></div></div>
+ </div></div></section>
+<section class="lesson-section reveal" id="lesson-13">
+ <div class="section-inner"><div class="lesson-grid">
+ <div class="lesson-text"><span class="page-num">13</span><div class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12c4-15 6 15 10 0s6 15 10 0"/></svg></div>
+ <span class="kicker">ADVANCED / 13 · CREATIVE SYSTEMS</span><h2>Wave Interference</h2>
+ <p class="tagline">파동의 간섭 — 두 개의 리듬이 만날 때.</p><p class="section-body">서로 다른 사인파를 더해 복잡한 곡선을 만듭니다. 마우스의 세로 위치는 진폭을, 가로 위치는 두 파동의 위상 차이를 바꿉니다.</p>
+ <div class="code-window"><div class="code-dots"><span></span><span></span><span></span></div><pre><code>let a = sin(x * frequency + time);
+let b = sin(x * frequency * 1.6 - time + phase);
+let y = height / 2 + (a + b) * amplitude;
+vertex(x, y);</code></pre></div>
+ <div class="quiz"><p class="quiz-q">Q. 두 파동을 더하면 어떤 결과가 나타날까요?</p><div class="quiz-options"><button type="button" class="quiz-option" data-correct="true">위상에 따라 진폭이 커지거나 작아짐</button><button type="button" class="quiz-option">항상 직선이 됨</button><button type="button" class="quiz-option">주파수가 항상 0이 됨</button><button type="button" class="quiz-option">캔버스 크기가 변함</button></div><p class="quiz-feedback" aria-live="polite"></p></div></div>
+ <div class="lesson-demo"><div class="demo-box"><div class="canvas-wrap advanced-canvas" id="canvas-wave"></div>
+ <p class="interaction-hint">HOVER TO INTERACT <span>마우스를 올리거나 터치해서 움직여보세요</span></p>
+ <div class="controls"><label>주파수<input type="range" id="wave-amount" min="1" max="8" value="3"></label><button type="button" id="wave-reset">Reset ↺</button></div></div></div>
+ </div></div></section>
+<section class="lesson-section reveal" id="lesson-14">
+ <div class="section-inner"><div class="lesson-grid">
+ <div class="lesson-text"><span class="page-num">14</span><div class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22V12M12 12L5 5M12 12l7-7M5 5V1M5 5H1M19 5V1M19 5h4"/></svg></div>
+ <span class="kicker">ADVANCED / 14 · CREATIVE SYSTEMS</span><h2>Recursive Trees</h2>
+ <p class="tagline">재귀 — 작은 규칙으로 자라는 구조.</p><p class="section-body">가지가 자기 자신을 더 짧게 호출하며 나무를 만듭니다. 종료 조건이 있어야 재귀가 멈춥니다. 마우스를 좌우로 움직이면 가지가 펼쳐지고, 깊이를 높이면 더 촘촘해집니다.</p>
+ <div class="code-window"><div class="code-dots"><span></span><span></span><span></span></div><pre><code>function branch(length, depth) {
+  if (depth === 0) return;
+  line(0, 0, 0, -length);
+  translate(0, -length);
+  for (let side of [-1, 1]) {
+    push(); rotate(angle * side);
+    branch(length * 0.68, depth - 1);
+    pop();
+  }
+}</code></pre></div>
+ <div class="quiz"><p class="quiz-q">Q. 재귀 함수에서 종료 조건이 필요한 이유는?</p><div class="quiz-options"><button type="button" class="quiz-option" data-correct="true">끝없이 자기 자신을 호출하지 않도록</button><button type="button" class="quiz-option">색을 빨간색으로 만들기 위해</button><button type="button" class="quiz-option">마우스 위치를 읽기 위해</button><button type="button" class="quiz-option">화면을 확대하기 위해</button></div><p class="quiz-feedback" aria-live="polite"></p></div></div>
+ <div class="lesson-demo"><div class="demo-box"><div class="canvas-wrap advanced-canvas" id="canvas-tree"></div>
+ <p class="interaction-hint">HOVER TO INTERACT <span>마우스를 올리거나 터치해서 움직여보세요</span></p>
+ <div class="controls"><label>재귀 깊이<input type="range" id="tree-amount" min="2" max="8" value="6"></label><button type="button" id="tree-reset">Reset ↺</button></div></div></div>
+ </div></div></section>
+<section class="lesson-section reveal" id="lesson-15">
+ <div class="section-inner"><div class="lesson-grid">
+ <div class="lesson-text"><span class="page-num">15</span><div class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(-35 12 12)"/><circle cx="12" cy="12" r="2"/></svg></div>
+ <span class="kicker">ADVANCED / 15 · CREATIVE SYSTEMS</span><h2>Orbital Systems</h2>
+ <p class="tagline">좌표 변환 — 회전하는 세계 안의 작은 세계.</p><p class="section-body">translate()와 rotate()를 조합해 공전 궤도를 만듭니다. push()와 pop()으로 각 궤도의 좌표계를 분리합니다. 마우스를 올리면 커서를 중심으로 궤도가 모입니다.</p>
+ <div class="code-window"><div class="code-dots"><span></span><span></span><span></span></div><pre><code>push();
+translate(centerX, centerY);
+rotate(time * speed);
+ellipse(0, 0, radius * 2, radius);
+translate(radius, 0);
+circle(0, 0, 10);
+pop();</code></pre></div>
+ <div class="quiz"><p class="quiz-q">Q. push()와 pop()을 함께 사용하는 이유는?</p><div class="quiz-options"><button type="button" class="quiz-option" data-correct="true">변환 상태가 다른 도형에 영향을 주지 않도록</button><button type="button" class="quiz-option">프레임 수를 두 배로 늘리기 위해</button><button type="button" class="quiz-option">입력을 차단하기 위해</button><button type="button" class="quiz-option">모든 변수를 삭제하기 위해</button></div><p class="quiz-feedback" aria-live="polite"></p></div></div>
+ <div class="lesson-demo"><div class="demo-box"><div class="canvas-wrap advanced-canvas" id="canvas-orbit"></div>
+ <p class="interaction-hint">HOVER TO INTERACT <span>마우스를 올리거나 터치해서 움직여보세요</span></p>
+ <div class="controls"><label>궤도 수<input type="range" id="orbit-amount" min="2" max="10" value="6"></label><button type="button" id="orbit-reset">Reset ↺</button></div></div></div>
+ </div></div></section>
+</div>
+    <footer class="site-footer">
+        <p>Code Sketchbook / A playground for curious minds.</p><a href="https://p5js.org/reference/" target="_blank" rel="noopener noreferrer">Explore p5.js ↗</a>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
